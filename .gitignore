@@ -1,0 +1,77 @@
+*.pid
+*.eggs
+*.topo.js
+# OS X nonsense
+.DS_Store
+._*
+
+# Python compiled files
+*.pyc
+*.pyo
+
+# Language compiled files
+#apps/*/src/*/locale/*/LC_MESSAGES/*.mo
+#desktop/core/src/desktop/locale/*/LC_MESSAGES/*.mo
+#desktop/libs/*/src/*/locale/*/LC_MESSAGES/*.mo
+
+# vim tmp files
+.*.swp
+.*.swo
+
+# emacs backup files
+.*~
+
+# logs
+logs
+metastore_db
+VERSION_INFO
+.*.log
+
+# ctags file
+tags
+TAGS
+
+# Third party build files
+*.egg-info/
+
+
+# Include top level distribution dir
+
+# Common "beeswaxd" product
+
+# Nose --with-id's file
+/.noseids
+
+# Coverage product
+/.coverage
+/coverage.xml
+
+# Common utility alias
+/d
+
+# Intellij project files
+.idea/
+*.iml
+
+# Database of running server
+desktop/desktop.db
+app.reg
+
+
+# Reviewboard config file
+.reviewboardrc
+
+# Sublime Text temp files
+*.subl*
+
+# Static files
+/static
+
+junitresults*
+
+.vscode
+.pylintrc
+.python-version
+.projectile
+
+*.zip
