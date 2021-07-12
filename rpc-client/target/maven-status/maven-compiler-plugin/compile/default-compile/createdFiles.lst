@@ -1,0 +1,4 @@
+com\iflytek\iptv\TranscodeClientApplication.class
+com\iflytek\iptv\config\NettyConfig.class
+com\iflytek\iptv\service\ClientCallBackServiceImpl.class
+com\iflytek\iptv\controller\DemoController.class

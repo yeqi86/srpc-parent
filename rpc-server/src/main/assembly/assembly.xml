@@ -1,0 +1,44 @@
+<assembly>
+    <id>assembly</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <directory>src/main/bin</directory>
+            <outputDirectory>bin</outputDirectory>
+            <fileMode>0755</fileMode>
+
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>conf</outputDirectory>
+            <fileMode>0644</fileMode>
+            <includes>
+                <include>*.properties</include>
+                <include>mapper/**/*.xml</include>
+                <include>static/**</include>
+                <include>templates/**</include>
+                <include>*.xml</include>
+                <include>*.yml</include>
+            </includes>
+        </fileSet>
+        <!-- 将第三方依赖打包到lib目录中 -->
+        <fileSet>
+            <directory>${basedir}/target/lib</directory>
+            <outputDirectory>lib</outputDirectory>
+            <fileMode>0755</fileMode>
+        </fileSet>
+
+        <!-- 将项目启动jar打包到boot目录中 -->
+        <fileSet>
+            <directory>${basedir}/target</directory>
+            <outputDirectory>lib</outputDirectory>
+            <fileMode>0755</fileMode>
+            <includes>
+                <include>${project.build.finalName}.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

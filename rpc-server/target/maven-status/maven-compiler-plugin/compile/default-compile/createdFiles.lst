@@ -1,0 +1,3 @@
+com\iflytek\iptv\Application.class
+com\iflytek\iptv\service\DemoApiImpl.class
+com\iflytek\iptv\config\NettyConfig.class
