@@ -13,7 +13,7 @@ public class ChannelInitializer extends io.netty.channel.ChannelInitializer<Sock
     protected void initChannel(SocketChannel socketChannel) throws Exception {
         ChannelPipeline p = socketChannel.pipeline();
         p.addLast(new ChannelHandler[]{new HttpClientCodec(),new HttpObjectAggregator(1024*1024*10)});
-        p.addLast(new IdleStateHandler(0,4,0, TimeUnit.SECONDS));	//心跳
+        p.addLast(new IdleStateHandler(0,10,0, TimeUnit.SECONDS));	//心跳
         p.addLast(new PingClient());								//心跳 机制
         p.addLast("hookedHandler", new WebSocketClientHandler());
     }
