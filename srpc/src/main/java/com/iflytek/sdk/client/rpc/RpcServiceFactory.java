@@ -1,4 +1,4 @@
-package com.iflytek.sdk.client;
+package com.iflytek.sdk.client.rpc;
 
 import com.iflytek.sdk.annotation.RpcService;
 import com.iflytek.sdk.decoder.MessageDecoder;
@@ -14,16 +14,17 @@ import com.iflytek.sdk.util.ChannelUtils;
 import com.iflytek.sdk.util.Logger;
 import com.iflytek.sdk.util.NumberUtils;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.Attribute;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.util.concurrent.CountDownLatch;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -48,6 +49,12 @@ public class RpcServiceFactory implements InvocationHandler {
         }
         RpcUrlRequest req = new RpcUrlRequest(clazz, url);
         clazzLocal.set(req);
+        RpcServiceFactory serviceFactory = new RpcServiceFactory();
+        return (T) Proxy.newProxyInstance(serviceFactory.getClass().getClassLoader(), new Class[]{clazz}, serviceFactory);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getClass(Class<?> clazz) throws ClassNotQualifiedException {
         RpcServiceFactory serviceFactory = new RpcServiceFactory();
         return (T) Proxy.newProxyInstance(serviceFactory.getClass().getClassLoader(), new Class[]{clazz}, serviceFactory);
     }
@@ -98,4 +105,26 @@ public class RpcServiceFactory implements InvocationHandler {
         }
     }
 
+
+    public static Channel connectToServer(String ip, Integer port) throws InterruptedException {
+        NioEventLoopGroup workerGroup = new NioEventLoopGroup();
+        final RpcClientHandler  clientHandler = new RpcClientHandler();
+        Bootstrap bootstrap = new Bootstrap();
+        bootstrap.group(workerGroup).channel(NioSocketChannel.class).option(ChannelOption.SO_KEEPALIVE, true)
+                .handler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel ch) throws Exception {
+                        Serialize serialize = SerializeFactory.getSerialize(SerializeProtocol.KRYO);
+                        ch.pipeline().addLast(new MessageEncoder(serialize), new MessageDecoder(serialize), clientHandler);
+                    }
+                });
+        ChannelFuture channelFuture = bootstrap.connect(ip, port);
+        Channel channel = channelFuture.sync().channel();
+
+        //为刚刚创建的channel，初始化channel属性
+        Attribute<Map<Integer,Object>> attribute = channel.attr(ChannelUtils.dataMap);
+        ConcurrentHashMap<Integer, Object> dataMap = new ConcurrentHashMap<>();
+        attribute.set(dataMap);
+        return channel;
+    }
 }

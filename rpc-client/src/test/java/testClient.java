@@ -1,6 +1,6 @@
 import com.iflytek.iptv.api.DemoApi;
 import com.iflytek.iptv.dto.EventMsg;
-import com.iflytek.sdk.client.RpcServiceFactory;
+import com.iflytek.sdk.client.rpc.RpcServiceFactory;
 import com.iflytek.sdk.exception.ClassNotQualifiedException;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;

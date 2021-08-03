@@ -1,4 +1,4 @@
-package com.iflytek.sdk.client;
+package com.iflytek.sdk.client.rpc;
 
 
 import com.google.gson.Gson;

@@ -1,6 +1,11 @@
 package com.iflytek.sdk.server.websocket;
 
 import com.google.gson.Gson;
+import com.iflytek.sdk.client.rpc.RpcServiceFactory;
+import com.iflytek.sdk.client.websocket.BaseListener;
+import com.iflytek.sdk.exception.ClassNotQualifiedException;
+import com.iflytek.sdk.util.DynamicProxyUtil;
+import com.iflytek.sdk.util.SpringUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
@@ -13,6 +18,8 @@ import io.netty.util.AttributeKey;
 import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.channels.Channel;
 
 /**
  * Created by Administrator on 2020/4/22.
@@ -48,6 +55,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
     // 移除
         String userid = String.valueOf(ctx.attr(AttributeKey.valueOf("userid")).get());
+        logger.info("userid:" + userid);
         NettyWebSocket.removeChannel(userid, ctx.channel());
         this.subOnlineCount();
         logger.info("有一连接关闭！当前在线人数为" + this.getOnlineCount());
@@ -78,7 +86,14 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
         ctx.flush();
     }
 
-    private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) {
+    private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) throws ClassNotQualifiedException {
+        // 判断是否ping消息
+        if (frame instanceof PingWebSocketFrame) {
+            if(logger.isDebugEnabled()) {
+                logger.debug("├ [Ping消息]");
+            }
+            return;
+        }
         // 判断是否关闭链路的指令
         if (frame instanceof CloseWebSocketFrame) {
             handshaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
@@ -91,6 +106,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
             }
             return;
         }
+
         if (frame instanceof BinaryWebSocketFrame) {
             BinaryWebSocketFrame binaryWebSocketFrame = (BinaryWebSocketFrame) frame;
             ByteBuf content = binaryWebSocketFrame.content();
@@ -105,9 +121,12 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
         // 应答消息
         String request = ((TextWebSocketFrame) frame).text();
           // System.out.println("服务端收到：" + request);
+       // logger.info(String.format("%s received %s", ctx.channel(), request));
         if (logger.isDebugEnabled()) {
             logger.debug(String.format("%s received %s", ctx.channel(), request));
         }
+        ServerListener sl =SpringUtil.getBean(ServerListener.class);
+        sl.doAction(request,ctx.channel());
               //   TextWebSocketFrame tws = new TextWebSocketFrame(
               //      new Date().toString() + ctx.channel().id() + "：" + request);
              // 群发

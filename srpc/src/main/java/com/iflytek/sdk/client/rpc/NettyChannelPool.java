@@ -1,18 +1,7 @@
-package com.iflytek.sdk.client;
+package com.iflytek.sdk.client.rpc;
 
-import com.iflytek.sdk.decoder.MessageDecoder;
-import com.iflytek.sdk.encoder.MessageEncoder;
-import com.iflytek.sdk.protocol.Serialize;
-import com.iflytek.sdk.protocol.SerializeFactory;
-import com.iflytek.sdk.protocol.SerializeProtocol;
-import com.iflytek.sdk.util.ChannelUtils;
-import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.SocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.Attribute;
-import java.util.HashMap;
+
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -74,33 +63,13 @@ public class NettyChannelPool {
             }
             //开始跟服务端交互，获取channel
             String[] serverConfig = this.url.split(":");
-            channel = connectToServer(serverConfig[0],Integer.parseInt(serverConfig[1]));
+            channel = RpcServiceFactory.connectToServer(serverConfig[0],Integer.parseInt(serverConfig[1]));
             channels[index] = channel;
         }
 
         return channel;
     }
 
-    private Channel connectToServer(String ip, Integer port) throws InterruptedException {
-        NioEventLoopGroup workerGroup = new NioEventLoopGroup();
-        final RpcClientHandler  clientHandler = new RpcClientHandler();
-        Bootstrap bootstrap = new Bootstrap();
-        bootstrap.group(workerGroup).channel(NioSocketChannel.class).option(ChannelOption.SO_KEEPALIVE, true)
-                .handler(new ChannelInitializer<SocketChannel>() {
-                    @Override
-                    protected void initChannel(SocketChannel ch) throws Exception {
-                        Serialize serialize = SerializeFactory.getSerialize(SerializeProtocol.KRYO);
-                        ch.pipeline().addLast(new MessageEncoder(serialize), new MessageDecoder(serialize), clientHandler);
-                    }
-                });
-        ChannelFuture channelFuture = bootstrap.connect(ip, port);
-        Channel channel = channelFuture.sync().channel();
 
-        //为刚刚创建的channel，初始化channel属性
-        Attribute<Map<Integer,Object>> attribute = channel.attr(ChannelUtils.dataMap);
-        ConcurrentHashMap<Integer, Object> dataMap = new ConcurrentHashMap<>();
-        attribute.set(dataMap);
-        return channel;
-    }
 
 }

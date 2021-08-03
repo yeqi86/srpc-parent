@@ -1,6 +1,7 @@
 package com.iflytek.iptv;
 
 
+import com.iflytek.sdk.server.Server;
 import com.iflytek.sdk.server.rpc.RpcServer;
 import com.iflytek.sdk.util.SpringUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ public class TranscodeClientApplication {
 
     public static void main(String[] args) throws Exception {
         SpringApplication.run(TranscodeClientApplication.class, args);
-        RpcServer rpc = (RpcServer) SpringUtil.getBean(RpcServer.class);
+        Server rpc = (Server) SpringUtil.getBean(Server.class);
         rpc.startRpc();
     }
 

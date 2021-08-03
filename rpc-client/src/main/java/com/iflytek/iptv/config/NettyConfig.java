@@ -1,5 +1,6 @@
 package com.iflytek.iptv.config;
 
+import com.iflytek.sdk.server.Server;
 import com.iflytek.sdk.server.rpc.RpcServer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +12,8 @@ public class NettyConfig {
 
 
     @Bean(name="rpcServer")
-    public RpcServer getRpcServer() {
+    public Server getRpcServer() {
 
-        return new RpcServer(1444,false);
+        return new Server(1444,false);
     }
 }
