@@ -75,3 +75,7 @@ junitresults*
 .projectile
 
 *.zip
+/rpc-client/target/
+/rpc-api/target/
+/rpc-server/target/
+
