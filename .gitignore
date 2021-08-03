@@ -56,7 +56,7 @@ TAGS
 # Database of running server
 desktop/desktop.db
 app.reg
-/target
+target/
 
 # Reviewboard config file
 .reviewboardrc
