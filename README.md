@@ -8,10 +8,10 @@
 ![image](https://user-images.githubusercontent.com/5287563/128147577-85a10830-d2ab-4b18-9072-01003b52b46c.png)
         
 2、项目说明:
-srpc：       rpc组件
-rpc-api：    接口组件(demo):封装tcp协议接口
-rpc-client:  客户端组件(demo)
-rpc-server:  服务端组件
+	srpc：       rpc组件
+	rpc-api：    接口组件(demo):封装tcp协议接口
+	rpc-client:  客户端组件(demo)
+	rpc-server:  服务端组件
 
 3、tcp使用：
 （1）定义接口：
@@ -39,7 +39,3 @@ rpc-server:  服务端组件
 
 
  
-
-
-
-
