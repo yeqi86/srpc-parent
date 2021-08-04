@@ -4,12 +4,7 @@
 
 使用说明：
 1、pom依赖:
- <dependency>
-            <groupId>com.iflytek.sdk</groupId>
-            <artifactId>srpc</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+![image](https://user-images.githubusercontent.com/5287563/128147577-85a10830-d2ab-4b18-9072-01003b52b46c.png)
         
 2、项目说明:
 srpc：       rpc组件
