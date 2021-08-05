@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @EnableCaching
 @Configuration
 public class NettyConfig {
-
-
     @Bean(name="rpcServer")
     public Server getRpcServer() {
             return new Server(1232);

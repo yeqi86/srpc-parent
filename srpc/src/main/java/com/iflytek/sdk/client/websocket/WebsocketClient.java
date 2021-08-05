@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 
 public class WebsocketClient {
 
+   static Channel channel;
 
     public static Channel connectToServer(String url) throws InterruptedException, URISyntaxException {
         EventLoopGroup group = new NioEventLoopGroup();
@@ -36,7 +37,9 @@ public class WebsocketClient {
         //进行握手
         WebSocketClientHandshaker handshaker = WebSocketClientHandshakerFactory.newHandshaker(websocketURI, WebSocketVersion.V13, (String) null, true, httpHeaders);
         //需要协议的host和port
-        Channel channel = boot.connect(websocketURI.getHost(), websocketURI.getPort()).sync().channel();
+        if(channel == null || !channel.isActive()) {
+             channel = boot.connect(websocketURI.getHost(), websocketURI.getPort()).sync().channel();
+        }
         WebSocketClientHandler handler = (WebSocketClientHandler) channel.pipeline().get("hookedHandler");
         handler.setHandshaker(handshaker);
 

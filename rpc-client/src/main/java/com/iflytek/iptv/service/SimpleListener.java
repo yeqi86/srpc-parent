@@ -9,12 +9,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class SimpleListener implements BaseListener {
     private final static Logger LOGGER = LoggerFactory.getLogger(SimpleListener.class);
-
     /**
      * 一个简单的Listener方法
      * @param event Guava规定此处只能有一个参数
      */
-
     @Override
     public void doAction(final String event){
         if (LOGGER.isInfoEnabled()){

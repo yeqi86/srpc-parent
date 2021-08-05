@@ -5,8 +5,5 @@ import com.iflytek.sdk.annotation.RpcService;
 
 @RpcService
 public interface DemoApi {
-
-
     public  String  sendMsg(EventMsg msg);
-
 }

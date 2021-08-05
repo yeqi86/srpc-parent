@@ -35,6 +35,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
     private int lossConnectCount = 0;
 
     private static final Gson gson = new Gson();
+
     /**
      * channel 通道 action 活跃的 当客户端主动链接服务端的链接后，这个通道就是活跃的了。也就是客户端与服务端建立了通信通道并且可以传输数据
      */
@@ -43,7 +44,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
 // 添加
         //   String userid = String.valueOf(ctx.attr(AttributeKey.valueOf("userid")).get());
         //    NettyWebSocket.addChannel(userid,ctx.channel());
-        if(logger.isDebugEnabled()) {
+        if (logger.isDebugEnabled()) {
             logger.debug("客户端与服务端连接开启：" + ctx.channel().remoteAddress().toString());
         }
     }
@@ -53,7 +54,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-    // 移除
+        // 移除
         String userid = String.valueOf(ctx.attr(AttributeKey.valueOf("userid")).get());
         logger.info("userid:" + userid);
         NettyWebSocket.removeChannel(userid, ctx.channel());
@@ -65,7 +66,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
     /**
      * 接收客户端发送的消息 channel 通道 Read 读 简而言之就是从通道中读取数据，也就是服务端接收客户端发来的数据。但是这个数据在不进行解码时它是ByteBuf类型的
      */
-  @Override
+    @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
 // 传统的HTTP接入
         if (msg instanceof FullHttpRequest) {
@@ -89,7 +90,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
     private void handlerWebSocketFrame(ChannelHandlerContext ctx, WebSocketFrame frame) throws ClassNotQualifiedException {
         // 判断是否ping消息
         if (frame instanceof PingWebSocketFrame) {
-            if(logger.isDebugEnabled()) {
+            if (logger.isDebugEnabled()) {
                 logger.debug("├ [Ping消息]");
             }
             return;
@@ -101,7 +102,7 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
         }
         // 判断是否pong消息
         if (frame instanceof PongWebSocketFrame) {
-            if(logger.isDebugEnabled()) {
+            if (logger.isDebugEnabled()) {
                 logger.debug("├ [Pong消息]");
             }
             return;
@@ -110,8 +111,8 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
         if (frame instanceof BinaryWebSocketFrame) {
             BinaryWebSocketFrame binaryWebSocketFrame = (BinaryWebSocketFrame) frame;
             ByteBuf content = binaryWebSocketFrame.content();
-            if(logger.isDebugEnabled()) {
-                logger.debug("├ [二进制数据]:{}" , content);
+            if (logger.isDebugEnabled()) {
+                logger.debug("├ [二进制数据]:{}", content);
             }
             final int length = content.readableBytes();
             final byte[] array = new byte[length];
@@ -120,19 +121,19 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
         }
         // 应答消息
         String request = ((TextWebSocketFrame) frame).text();
-          // System.out.println("服务端收到：" + request);
-       // logger.info(String.format("%s received %s", ctx.channel(), request));
+        // System.out.println("服务端收到：" + request);
+        // logger.info(String.format("%s received %s", ctx.channel(), request));
         if (logger.isDebugEnabled()) {
             logger.debug(String.format("%s received %s", ctx.channel(), request));
         }
-        ServerListener sl =SpringUtil.getBean(ServerListener.class);
-        sl.doAction(request,ctx.channel());
-              //   TextWebSocketFrame tws = new TextWebSocketFrame(
-              //      new Date().toString() + ctx.channel().id() + "：" + request);
-             // 群发
-             //     Global.group.writeAndFlush(tws);
-             // 返回【谁发的发给谁】
-            // ctx.channel().writeAndFlush(tws);
+        ServerListener sl = SpringUtil.getBean(ServerListener.class);
+        sl.doAction(request, ctx.channel());
+        //   TextWebSocketFrame tws = new TextWebSocketFrame(
+        //      new Date().toString() + ctx.channel().id() + "：" + request);
+        // 群发
+        //     Global.group.writeAndFlush(tws);
+        // 返回【谁发的发给谁】
+        // ctx.channel().writeAndFlush(tws);
     }
 
 
@@ -238,7 +239,6 @@ public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object
     public synchronized int getOnlineCount() {
         return onlineCount;
     }
-
 
 
 }

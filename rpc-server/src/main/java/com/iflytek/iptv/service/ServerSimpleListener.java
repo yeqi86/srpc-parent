@@ -18,7 +18,5 @@ public class ServerSimpleListener implements ServerListener {
         channel.writeAndFlush(tws);
         TextWebSocketFrame tws2 = new TextWebSocketFrame("大家都收到信息");
         NettyWebSocket.send2All(tws2);
-
-
     }
 }
