@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Administrator on 2019/7/14.
+ * @author qiye2 on 2019/7/14.
  */
 public class WebMessage {
 

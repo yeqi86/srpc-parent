@@ -7,7 +7,7 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
 /**
- * Created by Administrator on 2020/4/22.
+ * @author qiye2 2020/4/22.
  */
 public class ChildChannelHandler extends ChannelInitializer<SocketChannel> {
     @Override

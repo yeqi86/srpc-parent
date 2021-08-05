@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.nio.channels.Channel;
 
 /**
- * Created by Administrator on 2020/4/22.
+ * @author qiye2 on 2020/4/22.
  */
 public class MyWebSocketServerHandler extends SimpleChannelInboundHandler<Object> {
 
