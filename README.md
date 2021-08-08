@@ -19,14 +19,21 @@
 
 Network Service：底层传输，可以是TCP或HTTP。
 
-三、	Rpc流程序列图：
+三、环境支持
+    
+    netty 4.1.8
+    spring  4.0+
+    kryo 4.0.2
+
+四、	Rpc流程序列图：
 
 流程分工实现序列图：
 
 ![image](https://user-images.githubusercontent.com/5287563/128637934-bc2618c7-fcee-4d77-8bc8-efd7daeca9e5.png)
 
+五、Websocket流程图：
 
-四、使用说明：
+六、使用说明：
 
 1、pom依赖:
 

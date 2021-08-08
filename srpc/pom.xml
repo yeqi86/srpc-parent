@@ -155,11 +155,5 @@
       </plugins>
     </pluginManagement>
   </build>
-  <distributionManagement>
-    <repository>
-      <id>mvn-snapshots</id>
-      <!--  <url>http://192.168.57.201:8181/repository/maven-snapshots/</url>-->
-      <url>https://artifacts.iflytek.com/obu-mvn-snapshot-private/</url>
-    </repository>
-  </distributionManagement>
+
 </project>
