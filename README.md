@@ -24,14 +24,17 @@ Network Service：底层传输，可以是TCP或HTTP。
     netty 4.1.8
     spring  4.0+
     kryo 4.0.2
+    gson 2.8.5
+    hessian 4.0.62
 
-四、	Rpc流程序列图：
-
-流程分工实现序列图：
+四、Rpc流程序列图：
 
 ![image](https://user-images.githubusercontent.com/5287563/128637934-bc2618c7-fcee-4d77-8bc8-efd7daeca9e5.png)
 
-五、Websocket流程图：
+五、Websocke序列图：
+
+![image](https://user-images.githubusercontent.com/5287563/128639369-e7987ef0-0524-43fc-8b02-1b9ae3730e6b.png)
+
 
 六、使用说明：
 
@@ -111,7 +114,7 @@ Network Service：底层传输，可以是TCP或HTTP。
     
 ![image](https://user-images.githubusercontent.com/5287563/128147053-2b3a8c72-21e8-4deb-b875-47f23618af37.png)
 
-5、github地址:https://github.com/yeqi86/srpc-parent
+七、github地址:https://github.com/yeqi86/srpc-parent
 
 
 
