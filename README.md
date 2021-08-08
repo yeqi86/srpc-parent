@@ -9,6 +9,9 @@
 
 二、	Rpc服务框架组成：
 
+![image](https://user-images.githubusercontent.com/5287563/128637934-bc2618c7-fcee-4d77-8bc8-efd7daeca9e5.png)
+
+
 客户端（Client）：服务调用方。
 
 客户端存根（Client Stub）：存放服务端地址信息，将客户端的请求参数数据信息打包成网络消息，再通过网络传输发送给服务端。
