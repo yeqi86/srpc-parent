@@ -33,7 +33,7 @@ Network Service：底层传输，可以是TCP或HTTP。
 
 五、Websocke序列图：
 
-![image](https://user-images.githubusercontent.com/5287563/128640539-f92534ee-ea9e-4795-b8bb-9311e9e8ff61.png)
+![image](https://user-images.githubusercontent.com/5287563/128640587-9d0d5f79-ae4a-4ff0-8d7f-78e178fadcfe.png)
 
 六、使用说明：
 
