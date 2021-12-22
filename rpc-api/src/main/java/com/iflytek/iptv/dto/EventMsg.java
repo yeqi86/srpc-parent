@@ -1,7 +1,6 @@
 package com.iflytek.iptv.dto;
 
 
-import com.iflytek.sdk.protocol.Serialize;
 
 import java.io.Serializable;
 

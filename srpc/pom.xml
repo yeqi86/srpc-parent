@@ -33,11 +33,11 @@
       <artifactId>hessian</artifactId>
       <version>4.0.62</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.esotericsoftware/kryo -->
+
     <dependency>
       <groupId>com.esotericsoftware</groupId>
       <artifactId>kryo</artifactId>
-      <version>4.0.2</version>
+      <version>5.0.0-RC4</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->

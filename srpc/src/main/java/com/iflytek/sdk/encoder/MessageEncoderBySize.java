@@ -11,13 +11,13 @@ import io.netty.handler.codec.MessageToByteEncoder;
  *
  * <br/>==========================
  */
-public class MessageEncoder extends MessageToByteEncoder<Object> {
+public class MessageEncoderBySize extends MessageToByteEncoder<Object> {
 
     private Serialize serialize;
-    public MessageEncoder(Serialize serialize) {
+    public MessageEncoderBySize(Serialize serialize) {
         this.serialize = serialize;
     }
-
+   
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
         serialize.serialize(msg, out,10000);

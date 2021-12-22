@@ -34,4 +34,14 @@ public class KryoSerialization implements Serialize{
         input.close();
         return obj;
     }
+
+    @Override
+    public void serialize(Object obj, ByteBuf bytebuf, int size) {
+        Output output = new Output(new ByteArrayOutputStream(),size);
+
+        Kryo kryo = new Kryo();
+        kryo.writeClassAndObject(output, obj);
+        output.close();
+        bytebuf.writeBytes(output.getBuffer());
+    }
 }

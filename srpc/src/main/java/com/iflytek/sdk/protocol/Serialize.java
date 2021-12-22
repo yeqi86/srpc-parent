@@ -23,4 +23,6 @@ public interface Serialize {
      */
     Object deserialize(ByteBuf byteBuf);
 
+    void serialize(Object obj, ByteBuf bytebuf, int size);
+
 }

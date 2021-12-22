@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>WebSocket Chat Client</title>
+    <meta charset="utf-8"/>
+    <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="jquery.json-2.3.min.js"></script>
+    <script type="text/javascript">    $().ready(function () {                        // Check for the various File API support.　　　　　　　　　　　　　　if (window.File && window.FileReader && window.FileList                                && window.Blob) {                            // Great success! All the File APIs are supported.                        } else {                            alert('The File APIs are not fully supported in this browser.');                        }                    });    //在消息框中打印内容    function log(text) {        $("#log").append(text+"\n");    }    //全局的websocket变量var ws;    var paragraph = 10485760;    var fileList ;    var file;    var startSize,endSize = 0;    var i = 0; j = 0;    //连接服务器    $(function() {    $("#connect").click(function() {        ws = new WebSocket($("#uri").val());        //连接成功建立后响应        ws.onopen = function() {            log("成功连接到" + $("#uri").val());        }        //收到服务器消息后响应        ws.onmessage = function(e) {            log("服务器说" + e.data + (e.data=="ok"));            if(e.data == "ok"){            if(endSize < file.size){                startSize = endSize;                endSize += paragraph ;                if (file.webkitSlice) {                          var blob = file.webkitSlice(startSize, endSize);                } else if (file.mozSlice) {                          var blob = file.mozSlice(startSize, endSize);                }                var reader = new FileReader();                reader.readAsArrayBuffer(blob);                reader.onload = function loaded(evt) {                    var ArrayBuffer = evt.target.result;                    log("发送文件第" + (i++) + "部分");                    ws.send(ArrayBuffer);                    }            }            else{                    startSize = endSize = 0;                    i = 0;                    log("发送" + file.name +"完毕");                    file = fileList[j++];                    if(file.name){                    ws.send(file.name);                    }                    log("发送文件完毕");            }        }        //连接关闭后响应        ws.onclose = function() {            log("关闭连接");            ws = null;        }        return false;        }    });    });    $(function() {        $("#sendFileForm").click(function() {            fileList = document.getElementById("file").files;            file = fileList[0];            ws.send(file.name);        })    });    $(function() {    $("#reset").click(function() {        $("#log").empty();         return false;    });    });        </script>
+</head>
+<body><span>Html5功能测试</span> <span id="progress">0</span><br> <input type="text" id="uri" value="ws://localhost:8887"
+                                                                     style="width: 200px;"> <input type="button"
+                                                                                                   id="connect"
+                                                                                                   value="Connect"><input
+        type="button" id="disconnect" value="Disconnect" disabled="disabled">
+<form><input id="file" type="file" multiple/> <input type="button" id="sendFileForm" value="测试"/> <input type="button"
+                                                                                                         id="reset"
+                                                                                                         value="清空消息框"/>
+</form>
+<form><textarea id="log" rows="30" cols="100" style="font-family: monospace; color: red;"></textarea></form>
+</body>
+</html>
